@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Budget Planner</title>
+    <meta name="theme-color" content="#f7f7f7" id="theme-color">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize dark mode
+        const isDark = localStorage.getItem('theme') === 'dark' || 
+                      (!localStorage.getItem('theme') && 
+                       window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('theme-color').content = '#1a1b1e';
+        }
+    </script>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
+    <div class="container">
+        <header class="app-header">
+            <h1>Budget Calculator</h1>
+            <div class="controls-group">
+                <div class="currency-selector">
+                    <select id="currency-select" class="currency-select">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="JPY">JPY (¥)</option>
+                        <option value="AUD">AUD ($)</option>
+                        <option value="CAD">CAD ($)</option>
+                    </select>
+                </div>
+                <div class="file-controls">
+                    <button id="save-btn" class="control-btn">💾 Save</button>
+                    <button id="export-btn" class="control-btn">📤 Export CSV</button>
+                    <input type="file" id="import-input" accept=".csv" style="display: none;">
+                    <button id="import-btn" class="control-btn">📥 Import CSV</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="calculator-grid">
+            <div class="input-section">
+                <div class="income-section">
+                    <h2>Income Sources</h2>
+                    <div id="income-inputs">
+                        <div class="input-group">
+                            <input type="text" class="label-input" placeholder="Income Source">
+                            <input type="number" class="amount-input" placeholder="Amount">
+                        </div>
+                    </div>
+                    <button id="add-income" class="add-btn">+ Add Income Source</button>
+                </div>
+
+                <div class="expenses-section">
+                    <h2>Expenses</h2>
+                    <div id="expense-inputs">
+                        <div class="input-group">
+                            <input type="text" class="label-input" placeholder="Expense Label">
+                            <input type="number" class="amount-input" placeholder="Amount">
+                        </div>
+                    </div>
+                    <button id="add-expense" class="add-btn">+ Add Expense</button>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h2>Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span>Total Income:</span>
+                        <span id="total-income">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Expenses:</span>
+                        <span id="total-expenses">$0.00</span>
+                    </div>
+                    <div class="summary-item remaining">
+                        <span>Remaining Budget:</span>
+                        <span id="remaining-budget">$0.00</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="expense-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-section">
+            <h2>Budget Analytics</h2>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Monthly Trends</h3>
+                    <div class="chart-container">
+                        <canvas id="trends-chart"></canvas>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <h3>Insights & Alerts</h3>
+                    <div id="alerts-container" class="alerts-container">
+                        <!-- Alerts will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exchange-rates-section">
+            <h2>Exchange Rates</h2>
+            <div class="rates-grid">
+                <div class="rate-card">
+                    <div class="rate-header">
+                        <span>Last Updated:</span>
+                        <span id="rates-timestamp"></span>
+                    </div>
+                    <div id="major-rates" class="major-rates">
+                        <!-- Major currency rates will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Status Indicator -->
+        <div id="save-status" class="save-status">
+            <span class="save-icon">✓</span>
+            <span class="save-text">All changes saved</span>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loader"></div>
+        <span>Updating rates...</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
