@@ -552,17 +552,104 @@ h1 {
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 1rem;
+    :root {
+        --content-padding: 1rem;
+        --border-radius: 6px;
     }
-    
-    .controls-group {
-        flex-direction: column;
+
+    .container {
+        padding: var(--content-padding);
+    }
+
+    .calculator-grid {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
+    .controls-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .currency-selector {
+        width: 100%;
+    }
+
+    .currency-select {
+        width: 100%;
+        height: 44px; /* Better touch target */
+    }
+
+    .file-controls {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .control-btn {
+        width: 100%;
+        height: 44px;
+        justify-content: center;
+    }
+
+    .input-group {
+        grid-template-columns: 1fr;
+    }
+
+    .input-group input {
+        height: 44px;
+        font-size: 16px; /* Prevent iOS zoom */
+    }
+
+    .remove-btn {
+        width: 44px;
+        height: 44px;
+    }
+
     .analytics-grid {
         grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+        min-height: 200px;
+    }
+
+    /* Bottom fixed save status */
+    .save-status {
+        bottom: env(safe-area-inset-bottom, 20px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 2rem);
+    }
+
+    /* Adjust notification positioning */
+    .notification {
+        top: env(safe-area-inset-top, 1rem);
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+    }
+}
+
+/* Touch-specific optimizations */
+@media (hover: none) {
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .add-btn, .control-btn {
+        transition: opacity 0.2s;
+    }
+
+    .add-btn:active, .control-btn:active {
+        opacity: 0.7;
+    }
+
+    /* Disable hover effects on mobile */
+    .input-group:hover .delete-entry,
+    button:hover {
+        transform: none;
     }
 }
 
