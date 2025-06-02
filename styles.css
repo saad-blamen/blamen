@@ -2,16 +2,27 @@
 :root {
     --header-height: 60px;
     --sidebar-width: 250px;
+    --max-width: 1400px;
+    --content-padding: 2rem;
     --border-radius: 8px;
     --transition-speed: 0.3s;
     
-    /* Light Theme */
+    /* Theme Colors */
     --bg-primary: #ffffff;
     --bg-secondary: #f8f9fa;
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
     --text-primary: #2d3436;
     --text-secondary: #636e72;
+    --text-light: #f1f5f9;
+    --text-muted: #94a3b8;
     --accent-color: #0984e3;
     --border-color: #dfe6e9;
+    --primary: #6366f1;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
@@ -89,8 +100,16 @@
 }
 
 /* Cross-browser input styling */
+input {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
 input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -194,9 +213,10 @@ h1 {
 /* Layout Fixes */
 .calculator-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin: 2rem 0;
+    align-items: start;
 }
 
 .input-section {
@@ -228,11 +248,14 @@ h1 {
 }
 
 .input-group {
+    position: relative;
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
     gap: 8px;
     align-items: center;
     margin-bottom: 10px;
+    padding: 0.5rem;
+    transition: all var(--transition-speed) ease;
 }
 
 .input-group input {
